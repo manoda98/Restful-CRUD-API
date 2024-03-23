@@ -14,7 +14,27 @@ app.get('/' , (req , res) => {
 app.get('/blog' , (req , res) => {
     res.send('Hello Blog my name is manoda')
 })
- app.post('/product',async(req,res) => {
+
+app.get('/products', async(req , res) => {
+    try {
+        const products = await Product.find({});
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({message: ErrorEvent.message})
+    }
+})
+
+app.get('/products/:id', async(req,res) => {
+    try {
+        const {id} = req.params;
+        const products = await Product.findById({});
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({message: ErrorEvent.message})
+    }
+})
+
+ app.post('/products',async(req,res) => {
     try {
         console.log(req.body)
         const product = await Product.create(req.body)
